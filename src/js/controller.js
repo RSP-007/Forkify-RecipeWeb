@@ -28,9 +28,13 @@ const renderSpinner = function (parentEl) {
 const showRecipe = async function () {
   //1. Loading recipe
   try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    console.log(id);
+
     renderSpinner(recipeContainer);
     const res = await fetch(
-      `https://forkify-api.jonas.io/api/v2/recipes/664c8f193e7aa067e94e84c2`,
+      `https://forkify-api.jonas.io/api/v2/recipes/${id}`,
     );
     const data = await res.json();
 
@@ -41,7 +45,7 @@ const showRecipe = async function () {
     recipe = {
       id: recipe.id,
       title: recipe.title,
-      pubisher: recipe.pubisher,
+      publisher: recipe.publisher,
       sourceUrl: recipe.source_url,
       image: recipe.image_url,
       servings: recipe.servings,
@@ -128,7 +132,7 @@ const showRecipe = async function () {
           <h2 class="heading--2">How to cook it</h2>
           <p class="recipe__directions-text">
             This recipe was carefully designed and tested by
-            <span class="recipe__publisher">${recipe.pubisher}</span>. Please check out
+            <span class="recipe__publisher">${recipe.publisher}</span>. Please check out
             directions at their website.
           </p>
           <a
@@ -152,6 +156,12 @@ const showRecipe = async function () {
 };
 
 showRecipe();
+
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
+
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
 
