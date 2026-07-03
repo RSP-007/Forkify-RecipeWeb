@@ -20,14 +20,13 @@ const controlRecipe = async function () {
 
     //2. Rendering recipe
   } catch (err) {
-    alert(err);
+    recipeView.renderError();
   }
 };
 
 const init = function () {
   recipeView.generateRender(controlRecipe);
 };
-
 init();
 // window.addEventListener('hashchange', showRecipe);
 // window.addEventListener('load', showRecipe);
