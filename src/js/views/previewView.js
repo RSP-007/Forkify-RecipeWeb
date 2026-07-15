@@ -21,5 +21,4 @@ class previewView extends View {
     </li>`;
   }
 }
-
 export default new previewView();
