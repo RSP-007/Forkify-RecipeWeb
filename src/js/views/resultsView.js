@@ -1,17 +1,12 @@
 import View from './View';
 import previewView from './previewView';
-import icons from 'url:../../img/icons.svg';
 
 class ResultsView extends View {
   _parentElement = document.querySelector('.results');
-  _errorMessage = `No recipes found try again with correct name!`;
-  _successMessage = ``;
+  _errorMessage = 'No recipes found. Please try another search!';
 
   _generateMarkup() {
-    console.log(this._data);
-    return this._data
-      .map(bookmark => previewView.render(bookmark, false))
-      .join('');
+    return this._data.map(recipe => previewView.render(recipe, false)).join('');
   }
 }
 

@@ -1,9 +1,8 @@
 import View from './View';
-import icons from 'url:../../img/icons.svg';
 
 class AddRecipeView extends View {
   _parentElement = document.querySelector('.upload');
-  _message = 'Recipe was successully uploaded';
+  _message = 'Recipe was successfully uploaded';
 
   _window = document.querySelector('.add-recipe-window');
   _overlay = document.querySelector('.overlay');
@@ -12,14 +11,18 @@ class AddRecipeView extends View {
 
   constructor() {
     super();
+
+    // Register event handlers
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
   }
 
+  // Open/close the upload modal
   toggleWindow() {
     this._overlay.classList.toggle('hidden');
     this._window.classList.toggle('hidden');
   }
+
   _addHandlerShowWindow() {
     this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
   }
@@ -29,12 +32,13 @@ class AddRecipeView extends View {
     this._overlay.addEventListener('click', this.toggleWindow.bind(this));
   }
 
+  // Handle recipe form submission
   addHandlerUpload(handler) {
     this._parentElement.addEventListener('submit', function (e) {
       e.preventDefault();
-      const dataArr = [...new FormData(this)];
-      const dataObj = Object.fromEntries(dataArr);
-      handler(dataObj);
+
+      const data = Object.fromEntries(new FormData(this));
+      handler(data);
     });
   }
 

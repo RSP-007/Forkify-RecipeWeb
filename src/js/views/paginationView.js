@@ -4,16 +4,13 @@ import icons from 'url:../../img/icons.svg';
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
+  // Handle pagination button clicks
   addHandlerClick(handler) {
-    this._parentElement.addEventListener('click', function (e) {
+    this._parentElement.addEventListener('click', e => {
       const btn = e.target.closest('.btn--inline');
-
       if (!btn) return;
 
       const goToPage = +btn.dataset.goto;
-      console.log(goToPage);
-
-      console.log(btn);
       handler(goToPage);
     });
   }
@@ -32,40 +29,41 @@ class PaginationView extends View {
     if (curPage === numPages && numPages > 1)
       return this._generateMarkupButton('prev', curPage - 1);
 
-    // Other pages
+    // Middle pages
     if (curPage < numPages)
       return (
         this._generateMarkupButton('prev', curPage - 1) +
         this._generateMarkupButton('next', curPage + 1)
       );
 
-    // Only one page
+    // Single page
     return '';
   }
 
+  // Generate pagination button markup
   _generateMarkupButton(type, page) {
     return `
-    <button
-      data-goto="${page}"
-      class="btn--inline pagination__btn--${type}"
-    >
-      ${
-        type === 'prev'
-          ? `
-            <svg class="search__icon">
-              <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page ${page}</span>
-          `
-          : `
-            <span>Page ${page}</span>
-            <svg class="search__icon">
-              <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-          `
-      }
-    </button>
-  `;
+      <button
+        class="btn--inline pagination__btn--${type}"
+        data-goto="${page}"
+      >
+        ${
+          type === 'prev'
+            ? `
+              <svg class="search__icon">
+                <use href="${icons}#icon-arrow-left"></use>
+              </svg>
+              <span>Page ${page}</span>
+            `
+            : `
+              <span>Page ${page}</span>
+              <svg class="search__icon">
+                <use href="${icons}#icon-arrow-right"></use>
+              </svg>
+            `
+        }
+      </button>
+    `;
   }
 }
 
